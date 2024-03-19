@@ -6,6 +6,7 @@ export interface userStoreType {
     _id: string
     username: string
     role?: "user" | "moderator" | "admin"
+    avatar: string
 }
 
 interface userStore {
@@ -28,7 +29,7 @@ const useAuth = create<userStore>()(
 
             logOut: () => {
                 Cookies.remove("access_token")
-                set({})
+                set({ isLogged: false, user: undefined })
             }
         }),
         {

@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ThemeToggle } from "@/components/theming/ThemeToggle";
 import { registerForm } from "@/types/forms/authForms";
 
 import {

@@ -61,7 +61,8 @@ export class AuthService {
             user: {
                 username: candidate.username,
                 _id: candidate._id,
-                role: candidate.role
+                role: candidate.role,
+                avatar: candidate.avatar
             }
         }
 

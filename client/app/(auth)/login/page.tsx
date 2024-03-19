@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ThemeToggle } from "@/components/theming/ThemeToggle";
 import { loginForm, registerForm } from "@/types/forms/authForms";
 
 import {
@@ -23,11 +22,13 @@ import { config } from "@/config";
 import { toast } from "sonner";
 import Link from "next/link";
 import useAuth from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const { setUser } = useAuth()
+  const router = useRouter()
 
   const form = useForm<z.infer<typeof loginForm.formSchema>>({
     resolver: zodResolver(loginForm.formSchema),
@@ -42,8 +43,10 @@ const LoginPage = () => {
       setUser({
         _id: res.data.user._id,
         username: res.data.user.username,
-        role: res.data.user.role
+        role: res.data.user.role,
+        avatar: res.data.user.avatar
       }, res.data.access_token)
+      router.replace("/")
     } catch (error) {
         // @ts-ignore
       toast.error(error.response?.data.message)

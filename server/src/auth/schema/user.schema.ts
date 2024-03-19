@@ -25,6 +25,9 @@ export class User {
   @Prop({ default: "user" })
   role: Role
 
+  @Prop({ default: "/avatarph.png"})
+  avatar: string
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
