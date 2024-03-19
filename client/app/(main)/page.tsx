@@ -1,10 +1,8 @@
-import Header from './_components/header'
-
 const MainPage = () => {
   return (
-    <>
-        <Header />
-    </>
+    <div>
+      Explore Page
+    </div>
   )
 }
 

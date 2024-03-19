@@ -1,11 +1,16 @@
-import React from 'react'
+import AuthorizedOnly from "@/components/guard/AuthorizedOnly";
+import React from "react";
+import Header from "./_components/header";
 
-const MainLayout = ({ children }: {children: React.ReactNode}) => {
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className='h-screen'>
+    <AuthorizedOnly>
+      <div className="h-screen">
+        <Header />
         {children}
-    </div>
-  )
-}
+      </div>
+    </AuthorizedOnly>
+  );
+};
 
-export default MainLayout
+export default MainLayout;
