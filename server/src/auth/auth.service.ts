@@ -60,7 +60,8 @@ export class AuthService {
             }),
             user: {
                 username: candidate.username,
-                _id: candidate._id
+                _id: candidate._id,
+                role: candidate.role
             }
         }
 

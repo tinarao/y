@@ -3,6 +3,8 @@ import { HydratedDocument } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
+type Role = "user" | "moderator" | "admin" | undefined
+
 @Schema()
 export class User {
   @Prop()
@@ -19,6 +21,9 @@ export class User {
 
   @Prop()
   fullName: string;
+
+  @Prop({ default: "user" })
+  role: Role
 
 }
 
