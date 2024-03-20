@@ -14,6 +14,7 @@ import { Tweet } from "@/types/Tweet";
 import axios from "axios";
 import { userStoreType } from "@/hooks/useAuth";
 import { config } from "@/config";
+import { toast } from "sonner";
 
 interface Inputs {
   text: string;
@@ -26,7 +27,10 @@ const TweetForm = ({
   query: UseQueryResult<any, Error>;
   user: userStoreType | undefined;
 }) => {
+
   const onSubmit: SubmitHandler<Inputs> = async (values) => {
+
+
     const data = {
       ...values,
       author: user?._id,
@@ -39,10 +43,11 @@ const TweetForm = ({
 
     try {
       const res = await axios.post(config.api.tweet.create, data);
-      console.log(res);
+      toast.success("Твит сохранён!")
       query.refetch();
     } catch (error) {
       console.error(error);
+      toast.success("Упс... произошла ошибка :(")
     }
   };
 

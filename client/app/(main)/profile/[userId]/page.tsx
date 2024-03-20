@@ -10,6 +10,7 @@ import { useParams } from "next/navigation";
 import TweetsOnProfile from "../../_components/tweets-on-profile";
 import useAuth from "@/hooks/useAuth";
 import TweetForm from "@/components/TweetForm";
+import ProfileInfoContainer from "../../_components/profile-info";
 
 const ProfilePage = () => {
   const getProfileInfo = async () => {
@@ -30,68 +31,16 @@ const ProfilePage = () => {
   const { user } = useAuth();
 
   return (
-    <div className="container">
+    <div className="container p-0 border-l">
       <div className="grid grid-cols-4">
         <div className="col-span-1">
           {query.isPending ? (
             <div>грузим</div>
           ) : (
-            <div className="flex flex-col border-r h-full">
-              <div className="w-fit mx-auto">
-                <Image
-                  src={userInfo.avatar}
-                  width={200}
-                  height={200}
-                  className="rounded-full"
-                  alt={userInfo.username}
-                />
-              </div>
-              <div>
-                <h2 className="text-xl text-center">{userInfo.username}</h2>
-                <div className="flex mx-auto w-fit gap-4">
-                  {userInfo.subscribers ? (
-                    <h3>{userInfo.subscribers.length}</h3>
-                  ) : (
-                    <div className="flex flex-col items-center">
-                      <h5>0</h5>
-                      <h5>Подписчики</h5>
-                    </div>
-                  )}
-                  {userInfo.subscribedTo ? (
-                    <h3>{userInfo.subscribedTo.length}</h3>
-                  ) : (
-                    <div className="flex flex-col items-center">
-                      <h5>0</h5>
-                      <h5>Подписки</h5>
-                    </div>
-                  )}
-                </div>
-                <h5>
-                  {userInfo.fullName ? (
-                    <h5>{userInfo.fullName}</h5>
-                  ) : (
-                    <p>Добавьте полное имя</p>
-                  )}
-                </h5>
-                {userInfo.profileInfo ? (
-                  userInfo.profileInfo
-                ) : (
-                  <p>Добавьте описание профиля</p>
-                )}
-                {userInfo.links.length !== 0 ? (
-                  userInfo.links.map(({ i }: { i: string }) => (
-                    <div key={i}>
-                      <Link href={i}>{i}</Link>
-                    </div>
-                  ))
-                ) : (
-                  <p>Добавьте ссылки</p>
-                )}
-              </div>
-            </div>
+            <ProfileInfoContainer user={userInfo} />
           )}
         </div>
-        <div className="col-span-3">
+        <div className="col-span-3 border-x overflow-y-auto">
           <div className="py-4 px-8">
             <TweetForm
               query={query}
@@ -99,12 +48,15 @@ const ProfilePage = () => {
             />
           </div>
           <hr />
-          <div>
+          <div className="px-8">
             {query.isPending ? (
               <h1>gruzim</h1>
             ) : userInfo?.tweets.length !== 0 ? (
-              <div className="px-8">
-                <TweetsOnProfile tweets={userInfo?.tweets} />
+              <div>
+                <TweetsOnProfile 
+                  tweets={userInfo?.tweets} 
+                  query={query}
+                />
               </div>
             ) : (
               <div>

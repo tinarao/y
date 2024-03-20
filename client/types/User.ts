@@ -7,6 +7,8 @@ export interface User {
     email: string
     avatar: string
     profileInfo?: string
-    links?: string[]
+    links: string[]
     fullName?: string
+    subscribers? : User[]
+    subscribedTo?: User[]
 }

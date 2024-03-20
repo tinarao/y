@@ -101,12 +101,14 @@ const LoginPage = () => {
           <hr />
         </div>
         <div className="flex items-center justify-between">
-          <Button variant="outline" disabled={isLoading} className="w-48">
+          <Button size="lg" variant="outline" disabled={isLoading} className="w-48">
             {isLoading ? (
               <Loader2Icon className="animate-spin size-4" />
             ) : "Войти"}
             </Button>
-            <Link href="/register" className="text-blue-400 text-sm font-medium">У меня нет аккаунта</Link>
+            <Link href="/register" className="text-blue-400 text-sm font-medium hover:text-blue-700 transition duration-300">
+              У меня нет аккаунта
+            </Link>
         </div>
       </form>
     </Form>

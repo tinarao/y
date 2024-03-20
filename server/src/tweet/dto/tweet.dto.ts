@@ -6,3 +6,8 @@ export class CreateTweetDTO {
 export class FindTweetsDTO {
     readonly author
 }
+
+export class DeleteTweetDTO {
+    readonly reqSenderID;
+    readonly tweetID;
+}

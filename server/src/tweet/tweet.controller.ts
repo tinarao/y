@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateTweetDTO, FindTweetsDTO } from './dto/tweet.dto';
 import { TweetService } from './tweet.service';
 
@@ -15,6 +15,11 @@ export class TweetController {
     @Get("/:author")
     getTweetsByAuthor(@Param() author: FindTweetsDTO) {
         return this.tweetService.getTweetsByAuthorID(author)
+    }
+
+    @Delete("/delete/:id")
+    deleteTweetByID(@Param() id: string) {
+        return this.tweetService.deleteTweetByID(id)
     }
 
 }

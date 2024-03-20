@@ -104,12 +104,14 @@ const RegisterPage = () => {
           <hr />
         </div>
         <div className="flex items-center justify-between">
-          <Button variant="outline" disabled={isLoading} className="w-48">
+          <Button size="lg" variant="outline" disabled={isLoading} className="w-48">
             {isLoading ? (
               <Loader2Icon className="animate-spin size-4" />
             ) : "Зарегистрироваться"}
             </Button>
-            <Link href="/login" className="text-blue-400 text-sm font-medium">У меня есть аккаунт</Link>
+            <Link href="/login" className="text-blue-400 text-sm font-medium hover:text-blue-700 transition duration-300">
+              У меня есть аккаунт
+            </Link>
         </div>
       </form>
     </Form>
