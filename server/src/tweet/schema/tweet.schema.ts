@@ -4,27 +4,20 @@ import { User } from 'src/auth/schema/user.schema';
 
 export type TweetDocument = HydratedDocument<Tweet>;
 
-@Schema()
+@Schema({ collection: 'tweets' })
 export class Tweet {
 
-    @Prop({ maxlength: 140, minlength: 1, required: true })
-    text: string;
+  @Prop()
+  text: string
 
-    @Prop({ default: 0 })
-    likes: number;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "user"})
+  author: User
 
-    @Prop({ default: 0 })
-    reposts: number;
+  @Prop({ default: 0 })
+  likes: number
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "User" })
-    author: User
-
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "User" })
-    repostedPeople: User[]
-
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Tweet" })
-    comments: Tweet[]
-
+  @Prop({ default: 0 })
+  retweets: number
 }
 
 export const TweetSchema = SchemaFactory.createForClass(Tweet);

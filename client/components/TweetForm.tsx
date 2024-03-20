@@ -1,83 +1,83 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { PenLine } from "lucide-react";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "./ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, UseFormReturn, useForm } from "react-hook-form";
 import { tweetFormData } from "@/types/forms/tweetForm";
 import { z } from "zod";
-import useAuth from "@/hooks/useAuth";
+import { UseMutationResult, UseQueryResult } from "@tanstack/react-query";
+import { Tweet } from "@/types/Tweet";
 import axios from "axios";
+import { userStoreType } from "@/hooks/useAuth";
 import { config } from "@/config";
 
-const TweetForm = () => {
-  const { user } = useAuth();
+interface Inputs {
+  text: string;
+}
 
-  const form = useForm<z.infer<typeof tweetFormData.tweetSchema>>({
-    resolver: zodResolver(tweetFormData.tweetSchema),
-    defaultValues: tweetFormData.defaultValues,
-  });
+const TweetForm = ({
+  query,
+  user,
+}: {
+  query: UseQueryResult<any, Error>;
+  user: userStoreType | undefined;
+}) => {
+  const onSubmit: SubmitHandler<Inputs> = async (values) => {
+    const data = {
+      ...values,
+      author: user?._id,
+      createdAt: new Date().getTime(),
+    };
 
-  const onSubmit = async (values: z.infer<typeof tweetFormData.tweetSchema>) => {
-    const data = { ...values, author: user?._id };
-
-    try {
-        const res = await axios.post(config.api.tweet.create, data);
-        console.log(res)
-    } catch (error) {
-        console.error(error)
+    if (watch("text").length === 0) {
+      return setError("Твит не может быть пустым!");
     }
 
+    try {
+      const res = await axios.post(config.api.tweet.create, data);
+      console.log(res);
+      query.refetch();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  const { register, handleSubmit, watch } = useForm<Inputs>();
+  const [error, setError] = useState("");
+
   return (
-    <div className="py-4 px-8">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField
-            control={form.control}
-            name="text"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Textarea
-                    placeholder="Как прошёл ваш день?"
-                    className="resize-none"
-                    maxLength={140}
-                    rows={5}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="py-2">
-            <hr />
-          </div>
-          <div className="ml-auto w-fit">
-            <Button 
-                className="flex gap-2 hover:bg-black hover:text-white" 
-                size="lg"
-                variant="outline"
-            >
-              <PenLine className="size-4" /> Отправить
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div>
+        <Textarea
+          placeholder="Как прошёл ваш день?"
+          className={`resize-none text-lg ${
+            error && "border-2 border-red-500 shadow-md shadow-red-100"
+          }`}
+          maxLength={140}
+          rows={4}
+          {...register("text")}
+        />
+        {error && (
+          <span className="font-medium text-sm text-red-500">{error}</span>
+        )}
+      </div>
+      <div className="py-2">
+        <hr />
+      </div>
+      <div className="ml-auto w-fit">
+        <Button
+          className="flex gap-2 hover:bg-black hover:text-white"
+          size="lg"
+          variant="outline"
+        >
+          <PenLine className="size-4" /> Отправить
+        </Button>
+      </div>
+    </form>
   );
 };
 

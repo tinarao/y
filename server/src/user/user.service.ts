@@ -10,7 +10,7 @@ export class UserService {
 
     async getProfileInfoByID(id: string) {
         const _id = new mongoose.Types.ObjectId(id);
-        const userDetails = await this.userModel.findOne({ _id: _id});
+        const userDetails = await this.userModel.findOne({ _id: _id}).populate("tweets");
         // .populate("array of object id's")
         if (!userDetails) {
             throw new NotFoundException({

@@ -6,7 +6,7 @@ export type UserDocument = HydratedDocument<User>;
 
 type Role = "user" | "moderator" | "admin" | undefined
 
-@Schema()
+@Schema({ collection: 'users' })
 export class User {
   @Prop()
   username: string;
@@ -26,7 +26,7 @@ export class User {
   @Prop({ default: "/avatarph.png"})
   avatar: string
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Tweet"})
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: "tweets"})
   tweets: Tweet[]
 
   @Prop()
@@ -35,10 +35,10 @@ export class User {
   @Prop()
   links: string[]
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "user"})
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: "user"})
   subscribers: User[]
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "user"})
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: "user"})
   subscribedTo: User[]
 
 }

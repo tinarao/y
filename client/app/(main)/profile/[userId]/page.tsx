@@ -1,6 +1,5 @@
 "use client";
 
-import TweetForm from "@/components/TweetForm";
 import { config } from "@/config";
 import { getBearerHeader } from "@/utils/auth";
 import { useQuery } from "@tanstack/react-query";
@@ -8,7 +7,9 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React from "react";
+import TweetsOnProfile from "../../_components/tweets-on-profile";
+import useAuth from "@/hooks/useAuth";
+import TweetForm from "@/components/TweetForm";
 
 const ProfilePage = () => {
   const getProfileInfo = async () => {
@@ -20,9 +21,13 @@ const ProfilePage = () => {
   };
 
   const { userId } = useParams();
-  const query = useQuery({ queryKey: ["todos"], queryFn: getProfileInfo });
+  const query = useQuery({
+     queryKey: ["todos"], 
+     queryFn: getProfileInfo,
+    });
 
-  const user = query.data;
+  const userInfo = query.data;
+  const { user } = useAuth();
 
   return (
     <div className="container">
@@ -34,26 +39,26 @@ const ProfilePage = () => {
             <div className="flex flex-col border-r h-full">
               <div className="w-fit mx-auto">
                 <Image
-                  src={user.avatar}
+                  src={userInfo.avatar}
                   width={200}
                   height={200}
                   className="rounded-full"
-                  alt={user.username}
+                  alt={userInfo.username}
                 />
               </div>
               <div>
-                <h2 className="text-xl text-center">{user.username}</h2>
+                <h2 className="text-xl text-center">{userInfo.username}</h2>
                 <div className="flex mx-auto w-fit gap-4">
-                  {user.subscribers ? (
-                    <h3>{user.subscribers.length}</h3>
+                  {userInfo.subscribers ? (
+                    <h3>{userInfo.subscribers.length}</h3>
                   ) : (
                     <div className="flex flex-col items-center">
                       <h5>0</h5>
                       <h5>Подписчики</h5>
                     </div>
                   )}
-                  {user.subscribedTo ? (
-                    <h3>{user.subscribedTo.length}</h3>
+                  {userInfo.subscribedTo ? (
+                    <h3>{userInfo.subscribedTo.length}</h3>
                   ) : (
                     <div className="flex flex-col items-center">
                       <h5>0</h5>
@@ -62,19 +67,19 @@ const ProfilePage = () => {
                   )}
                 </div>
                 <h5>
-                  {user.fullName ? (
-                    <h5>{user.fullName}</h5>
+                  {userInfo.fullName ? (
+                    <h5>{userInfo.fullName}</h5>
                   ) : (
                     <p>Добавьте полное имя</p>
                   )}
                 </h5>
-                {user.profileInfo ? (
-                  user.profileInfo
+                {userInfo.profileInfo ? (
+                  userInfo.profileInfo
                 ) : (
                   <p>Добавьте описание профиля</p>
                 )}
-                {user.links.length !== 0 ? (
-                  user.links.map(({ i }: { i: string }) => (
+                {userInfo.links.length !== 0 ? (
+                  userInfo.links.map(({ i }: { i: string }) => (
                     <div key={i}>
                       <Link href={i}>{i}</Link>
                     </div>
@@ -87,12 +92,19 @@ const ProfilePage = () => {
           )}
         </div>
         <div className="col-span-3">
-          <TweetForm />
+          <div className="py-4 px-8">
+            <TweetForm
+              query={query}
+              user={user}
+            />
+          </div>
           <hr />
           <div>
-            {user?.tweets ? (
-              <div>
-                <h3>twiti est</h3>
+            {query.isPending ? (
+              <h1>gruzim</h1>
+            ) : userInfo?.tweets.length !== 0 ? (
+              <div className="px-8">
+                <TweetsOnProfile tweets={userInfo?.tweets} />
               </div>
             ) : (
               <div>
