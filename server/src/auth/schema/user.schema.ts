@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { Tweet } from 'src/tweet/schema/tweet.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -17,9 +18,6 @@ export class User {
   password: string;
 
   @Prop()
-  bio: string;
-
-  @Prop()
   fullName: string;
 
   @Prop({ default: "user" })
@@ -27,6 +25,21 @@ export class User {
 
   @Prop({ default: "/avatarph.png"})
   avatar: string
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "Tweet"})
+  tweets: Tweet[]
+
+  @Prop()
+  profileInfo: string
+
+  @Prop()
+  links: string[]
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "user"})
+  subscribers: User[]
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "user"})
+  subscribedTo: User[]
 
 }
 

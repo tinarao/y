@@ -6,6 +6,9 @@ export const config = {
         },
         user: {
             getProfileInfoByID: "http://localhost:4000/api/v1/user/"
+        },
+        tweet: {
+            create: "http://localhost:4000/api/v1/tweet",
         }
     }
 }

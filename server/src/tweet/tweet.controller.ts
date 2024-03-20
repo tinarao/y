@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { TweetDTO } from './dto/tweet.dto';
+import { CreateTweetDTO } from './dto/tweet.dto';
 
 @Controller('tweet')
 export class TweetController {
 
     @Post("/")
-    createTweet(@Body() dto: TweetDTO) {
+    createTweet(@Body() dto: CreateTweetDTO) {
         return dto
     }
 

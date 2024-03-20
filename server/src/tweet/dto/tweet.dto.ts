@@ -1,4 +1,4 @@
-export class TweetDTO {
+export class CreateTweetDTO {
     readonly text;
     readonly author;
 }

@@ -9,6 +9,11 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   controllers: [AuthController],
   providers: [AuthService],
+  exports: [
+    MongooseModule.forFeature([
+      { name: "user", schema: UserSchema}
+    ]),
+  ],
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forFeature([
