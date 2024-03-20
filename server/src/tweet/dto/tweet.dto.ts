@@ -11,3 +11,8 @@ export class DeleteTweetDTO {
     readonly reqSenderID;
     readonly tweetID;
 }
+
+export class LikeTweetDTO {
+    readonly tweetID
+    readonly senderID
+}

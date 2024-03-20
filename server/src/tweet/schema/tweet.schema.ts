@@ -13,6 +13,9 @@ export class Tweet {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: "user"})
   author: User
 
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: "user"})
+  peopleWhoLiked: User[]
+
   @Prop({ default: 0 })
   likes: number
 

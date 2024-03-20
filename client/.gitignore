@@ -9,6 +9,8 @@
 # testing
 /coverage
 
+pc.ts
+
 # next.js
 /.next/
 /out/
