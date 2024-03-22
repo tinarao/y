@@ -5,4 +5,5 @@ export interface Tweet {
     likes: number
     retweets: number
     peopleWhoLiked: string[]
+    createdAt: Date
 }

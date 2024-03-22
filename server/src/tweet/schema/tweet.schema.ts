@@ -4,7 +4,7 @@ import { User } from 'src/auth/schema/user.schema';
 
 export type TweetDocument = HydratedDocument<Tweet>;
 
-@Schema({ collection: 'tweets' })
+@Schema({ collection: 'tweets', timestamps: true })
 export class Tweet {
 
   @Prop()
@@ -21,6 +21,7 @@ export class Tweet {
 
   @Prop({ default: 0 })
   retweets: number
+
 }
 
 export const TweetSchema = SchemaFactory.createForClass(Tweet);

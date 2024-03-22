@@ -44,7 +44,11 @@ const LoginPage = () => {
         _id: res.data.user._id,
         username: res.data.user.username,
         role: res.data.user.role,
-        avatar: res.data.user.avatar
+        avatar: res.data.user.avatar,
+        email: res.data.user.email,
+        profileInfo: res.data.user.profileInfo,
+        links: res.data.user.links,
+        fullName: res.data.user.fullName
       }, res.data.access_token)
       router.replace("/")
     } catch (error) {

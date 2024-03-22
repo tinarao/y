@@ -32,7 +32,7 @@ export class User {
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: "tweets"})
   likedTweets: Tweet[]
 
-  @Prop()
+  @Prop({ default: undefined })
   profileInfo: string
 
   @Prop()

@@ -5,7 +5,8 @@ export const config = {
             login: "http://localhost:4000/api/v1/auth/login",
         },
         user: {
-            getProfileInfoByID: "http://localhost:4000/api/v1/user/"
+            getProfileInfoByID: "http://localhost:4000/api/v1/user/",
+            editProfile: "http://localhost:4000/api/v1/user/edit"
         },
         tweet: {
             create: "http://localhost:4000/api/v1/tweet",

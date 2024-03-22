@@ -15,10 +15,11 @@ interface TOPProps {
 
 const TweetsOnProfile = ({ tweet, query }: TOPProps) => {
   const { user } = useAuth();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [isLiked, setIsLiked] = useState(
     tweet.peopleWhoLiked.includes(user?._id as string)
   );
+  const createdAt = new Date(tweet.createdAt).toLocaleString()
 
   const onTweetDelete = async (tweet: Tweet) => {
     if (user?._id !== tweet.author) {
@@ -41,7 +42,7 @@ const TweetsOnProfile = ({ tweet, query }: TOPProps) => {
   };
 
   const onTweetLike = async (tweet: Tweet) => {
-    setLoading(true)
+    setLoading(true);
     if (tweet.peopleWhoLiked.includes(user?._id as string)) {
       try {
         const response = await axios.patch(
@@ -69,7 +70,6 @@ const TweetsOnProfile = ({ tweet, query }: TOPProps) => {
       } catch (error) {
         console.error(error);
         toast.error("Произошла ошибка, попробуйте ещё раз");
-
       }
     }
     setLoading(false);
@@ -78,41 +78,50 @@ const TweetsOnProfile = ({ tweet, query }: TOPProps) => {
 
   return (
     <div className="border rounded-lg">
-      <h3 className="px-2 py-4">
+      <h3 className="px-4 py-4 text-lg">
         {tweet.text}
       </h3>
-      <div className="flex gap-8 items-center border-t px-2">
-        <div className="flex gap-2 items-center py-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => onTweetLike(tweet)}
-            disabled={loading}
-          >
-            <Heart
-              className={`size-4 stroke-black dark:stroke-white ${
-                isLiked ? "fill-red-500 stroke-red-500 dark:stroke-red-500" : ""
-              }`}
-            />
-          </Button>
-          {tweet.likes}
-        </div>
-        <div className="flex gap-2 items-center">
-          <Button variant="ghost" size="icon" disabled={loading}>
-            <RepeatIcon className="size-4" />
-          </Button>
-          {tweet.retweets}
+      <div className="flex gap-8 items-center border-t px-2 justify-between">
+        <div className="flex items-center gap-6">
+          <div className="flex gap-2 items-center py-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onTweetLike(tweet)}
+              disabled={loading}
+            >
+              <Heart
+                className={`size-4 stroke-black dark:stroke-white ${
+                  isLiked
+                    ? "fill-red-500 stroke-red-500 dark:stroke-red-500"
+                    : ""
+                }`}
+              />
+            </Button>
+            {tweet.likes}
+          </div>
+          <div className="flex gap-2 items-center">
+            <Button variant="ghost" size="icon" disabled={loading}>
+              <RepeatIcon className="size-4" />
+            </Button>
+            {tweet.retweets}
+          </div>
+          <div>
+            <Button
+              size="icon"
+              variant="ghost"
+              type="button"
+              onClick={() => onTweetDelete(tweet)}
+              disabled={loading}
+            >
+              <Trash className="size-4" />
+            </Button>
+          </div>
         </div>
         <div>
-          <Button
-            size="icon"
-            variant="ghost"
-            type="button"
-            onClick={() => onTweetDelete(tweet)}
-            disabled={loading}
-          >
-            <Trash className="size-4" />
-          </Button>
+          <h3 className="text-xs text-neutral-700">
+            {createdAt}
+          </h3>
         </div>
       </div>
     </div>

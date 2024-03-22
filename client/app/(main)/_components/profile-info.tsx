@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import InfoButton from "@/components/ui/info-button";
+import { Label } from "@/components/ui/label";
 import { User } from "@/types/User";
-import { Info, PlusCircle, Users } from "lucide-react";
+import { Globe, Info, PlusCircle, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -18,7 +19,9 @@ const ProfileInfoContainer = ({ user }: { user: User }) => {
         />
       </div>
       <div className="">
-        <h2 className="text-xl text-center">{user.username}</h2>
+        <h2 className="text-xl text-center font-semibold py-2">
+          {user.username}
+        </h2>
         <div className="flex mx-auto w-fit gap-4">
           {user.subscribers ? (
             <div className="py-4 text-sm">
@@ -41,9 +44,9 @@ const ProfileInfoContainer = ({ user }: { user: User }) => {
             <h3>0</h3>
           )}
         </div>
-        <div className="space-y-2">
+        <div className="px-4 space-y-2">
           {user.fullName ? (
-            <h5>{user.fullName}</h5>
+            <h5 className="text-md font-medium">{user.fullName}</h5>
           ) : (
             <div className="w-full">
               <InfoButton asChild>
@@ -54,7 +57,7 @@ const ProfileInfoContainer = ({ user }: { user: User }) => {
             </div>
           )}
           {user.profileInfo ? (
-            user.profileInfo
+            <p>{user.profileInfo}</p>
           ) : (
             <div className="w-full">
               <InfoButton asChild>
@@ -64,10 +67,17 @@ const ProfileInfoContainer = ({ user }: { user: User }) => {
               </InfoButton>
             </div>
           )}
+          <hr />
           {user?.links.length !== 0 ? (
             user?.links.map((i) => (
               <div key={i}>
-                <Link href={i}>{i}</Link>
+                <Link
+                  href={i}
+                  className="flex items-center text-blue-500 line-clamp-1 underline hover:text-blue-800 transition"
+                >
+                  <Globe className="size-6 text-gray-500 mr-2" />
+                  <span className="line-clamp-1">{i}</span>
+                </Link>
               </div>
             ))
           ) : (

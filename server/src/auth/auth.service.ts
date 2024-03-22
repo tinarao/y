@@ -62,7 +62,11 @@ export class AuthService {
                 username: candidate.username,
                 _id: candidate._id,
                 role: candidate.role,
-                avatar: candidate.avatar
+                avatar: candidate.avatar,
+                email: candidate.email,
+                profileInfo: candidate.profileInfo,
+                links: candidate.links,
+                fullName: candidate.fullName
             }
         }
 

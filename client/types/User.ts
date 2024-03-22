@@ -3,9 +3,9 @@ export interface User {
     __v?: number
     username: string
     role: string
+    avatar: string
     password?: string
     email: string
-    avatar: string
     profileInfo?: string
     links: string[]
     fullName?: string

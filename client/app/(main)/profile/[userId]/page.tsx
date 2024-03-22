@@ -26,9 +26,9 @@ const ProfilePage = () => {
 
   const { userId } = useParams();
   const query = useQuery({
-     queryKey: ["todos"], 
-     queryFn: getProfileInfo,
-    });
+    queryKey: ["todos"],
+    queryFn: getProfileInfo,
+  });
 
   const userInfo = query.data;
   const { user } = useAuth();
@@ -45,10 +45,7 @@ const ProfilePage = () => {
         </div>
         <div className="col-span-3 border-x overflow-y-auto">
           <div className="py-4 px-8">
-            <TweetForm
-              query={query}
-              user={user}
-            />
+            <TweetForm query={query} user={user} />
           </div>
           <hr />
           <div className="px-8">
@@ -56,12 +53,8 @@ const ProfilePage = () => {
               <Loading />
             ) : userInfo.tweets.length !== 0 ? (
               <div className="my-2 flex flex-col gap-4">
-                {userInfo.tweets.toReversed().map(i => (
-                  <TweetsOnProfile 
-                    key={i._id}
-                    tweet={i} 
-                    query={query}
-                  />
+                {userInfo.tweets.toReversed().map((i: Tweet) => (
+                  <TweetsOnProfile key={i._id} tweet={i} query={query} />
                 ))}
               </div>
             ) : (

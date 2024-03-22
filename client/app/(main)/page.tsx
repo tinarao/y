@@ -1,4 +1,5 @@
 const MainPage = () => {
+
   return (
     <div>
       Explore Page

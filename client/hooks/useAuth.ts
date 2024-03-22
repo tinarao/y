@@ -7,6 +7,10 @@ export interface userStoreType {
     username: string
     role?: "user" | "moderator" | "admin"
     avatar: string
+    email: string
+    profileInfo?: string
+    links: string[]
+    fullName?: string
 }
 
 interface userStore {

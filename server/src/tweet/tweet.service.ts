@@ -70,4 +70,8 @@ export class TweetService {
         return tweet
     }
 
+    async getHotTweets() {
+        return 0
+    }
+
 }
