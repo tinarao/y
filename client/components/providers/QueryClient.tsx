@@ -1,13 +1,18 @@
 "use client"
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactNode } from "react";
+import { QueryClient, QueryClientProvider, HydrationBoundary } from "@tanstack/react-query";
+import { hydrate } from "@tanstack/query-core"
+import { ReactNode, useState } from "react";
 
-const queryClient = new QueryClient();
 
 const QueryClientWrapper = ({ children }: { children: ReactNode }) => {
+
+  const QC = new QueryClient()
+
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={QC}>
+      {children}
+    </QueryClientProvider>
   );
 };
 

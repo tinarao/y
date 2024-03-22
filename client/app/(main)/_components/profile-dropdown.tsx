@@ -1,17 +1,10 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { BookOpenText, Cog, LogOut, MessageCircle } from "lucide-react";
 
 import Link from "next/link";
 import Image from "next/image";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const ProfileDropdown = () => {
   const { user, logOut } = useAuth();
@@ -27,10 +20,10 @@ const ProfileDropdown = () => {
       <DropdownMenuTrigger>
         <Image
           className="rounded-full"
-          src={user?.avatar as string}
+          src={user?.avatar ? user?.avatar as string : "/avatarph.png"}
           width={50}
           height={50}
-          alt={user?.username as string}
+          alt={user?.username ? user?.username as string : "Аватар"}
           priority={true}
         />
       </DropdownMenuTrigger>

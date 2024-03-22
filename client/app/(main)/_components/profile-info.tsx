@@ -24,10 +24,16 @@ const ProfileInfoContainer = ({ user }: { user: User }) => {
             <div className="py-4 text-sm">
               <div className="flex gap-8">
                 <div className="flex">
-                <Link href="/" className="mr-1 font-bold">{user.subscribers.length}</Link> подписчиков
+                  <Link href="/" className="mr-1 font-bold">
+                    {user.subscribers.length}
+                  </Link>{" "}
+                  подписчиков
                 </div>
                 <div className="flex">
-                <Link href="/" className="mr-1 font-bold">{user.subscribedTo?.length}</Link> подписок
+                  <Link href="/" className="mr-1 font-bold">
+                    {user.subscribedTo?.length}
+                  </Link>{" "}
+                  подписок
                 </div>
               </div>
             </div>
@@ -35,35 +41,45 @@ const ProfileInfoContainer = ({ user }: { user: User }) => {
             <h3>0</h3>
           )}
         </div>
-        <h5>
+        <div className="space-y-2">
           {user.fullName ? (
             <h5>{user.fullName}</h5>
           ) : (
-            <InfoButton>
-              <PlusCircle className="size-4" /> Добавьте полное имя
-            </InfoButton>
-          )}
-        </h5>
-        {user.profileInfo ? (
-          user.profileInfo
-        ) : (
-          <InfoButton>
-            <PlusCircle className="size-4" /> Добавьте описание профиля
-          </InfoButton>
-        )}
-        {user?.links.length !== 0 ? (
-          user?.links.map((i) => (
-            <div key={i}>
-              <Link href={i}>{i}</Link>
+            <div className="w-full">
+              <InfoButton asChild>
+                <Link href="/settings">
+                  <PlusCircle className="size-4" /> Добавьте полное имя
+                </Link>
+              </InfoButton>
             </div>
-          ))
-        ) : (
-          <div className="w-full">
-            <InfoButton>
-              <PlusCircle className="size-4" /> Добавьте ссылки
-            </InfoButton>
-          </div>
-        )}
+          )}
+          {user.profileInfo ? (
+            user.profileInfo
+          ) : (
+            <div className="w-full">
+              <InfoButton asChild>
+                <Link href="/settings">
+                  <PlusCircle className="size-4" /> Добавьте описание профиля
+                </Link>
+              </InfoButton>
+            </div>
+          )}
+          {user?.links.length !== 0 ? (
+            user?.links.map((i) => (
+              <div key={i}>
+                <Link href={i}>{i}</Link>
+              </div>
+            ))
+          ) : (
+            <div className="w-full">
+              <InfoButton asChild>
+                <Link href="/settings">
+                  <PlusCircle className="size-4" /> Добавьте ссылки
+                </Link>
+              </InfoButton>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

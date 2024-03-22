@@ -90,8 +90,8 @@ const TweetsOnProfile = ({ tweet, query }: TOPProps) => {
             disabled={loading}
           >
             <Heart
-              className={`size-4 stroke-none ${
-                isLiked ? "fill-red-500" : "stroke-black"
+              className={`size-4 stroke-black dark:stroke-white ${
+                isLiked ? "fill-red-500 stroke-red-500 dark:stroke-red-500" : ""
               }`}
             />
           </Button>

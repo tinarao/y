@@ -12,6 +12,8 @@ import useAuth from "@/hooks/useAuth";
 import TweetForm from "@/components/TweetForm";
 import ProfileInfoContainer from "../../_components/profile-info";
 import { Tweet } from "@/types/Tweet";
+import NoTweets from "@/components/conditional/NoTweets";
+import Loading from "@/components/conditional/Loading";
 
 const ProfilePage = () => {
   const getProfileInfo = async () => {
@@ -51,7 +53,7 @@ const ProfilePage = () => {
           <hr />
           <div className="px-8">
             {query.isPending ? (
-              <h1>gruzim</h1>
+              <Loading />
             ) : userInfo.tweets.length !== 0 ? (
               <div className="my-2 flex flex-col gap-4">
                 {userInfo.tweets.toReversed().map(i => (
@@ -63,9 +65,7 @@ const ProfilePage = () => {
                 ))}
               </div>
             ) : (
-              <div>
-                <h3>twitow net</h3>
-              </div>
+              <NoTweets />
             )}
           </div>
         </div>
