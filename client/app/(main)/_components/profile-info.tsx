@@ -8,8 +8,8 @@ import Link from "next/link";
 
 const ProfileInfoContainer = ({ user }: { user: User }) => {
   return (
-    <div className="flex flex-col items-center">
-      <div className="w-fit mx-auto">
+    <div className="flex flex-col items-center border-x h-full">
+      <div className="w-fit mx-auto pt-4">
         <Image
           src={user.avatar}
           width={200}

@@ -44,6 +44,9 @@ export class User {
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: "user"})
   subscribedTo: User[]
 
+  @Prop()
+  background: string
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

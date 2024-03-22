@@ -11,6 +11,7 @@ export interface userStoreType {
     profileInfo?: string
     links: string[]
     fullName?: string
+    background?: string
 }
 
 interface userStore {
