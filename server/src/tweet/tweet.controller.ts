@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateTweetDTO, FindTweetsDTO, LikeTweetDTO } from './dto/tweet.dto';
 import { TweetService } from './tweet.service';
 
@@ -22,9 +22,13 @@ export class TweetController {
         return this.tweetService.deleteTweetByID(id)
     }
 
-    @Post("/like/:tweetID/:senderID")
+    @Patch("/like/:tweetID/:senderID")
     likeTweet(@Param() dto: LikeTweetDTO) {
         return this.tweetService.addLikeToTweet(dto)
     }
 
+    @Patch("/removelike/:tweetID/:senderID")
+    removeLike(@Param() dto: LikeTweetDTO) {
+        return this.tweetService.removeLikeFromTweet(dto)
+    }
 }

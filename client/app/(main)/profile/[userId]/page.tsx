@@ -54,7 +54,7 @@ const ProfilePage = () => {
               <h1>gruzim</h1>
             ) : userInfo.tweets.length !== 0 ? (
               <div className="my-2 flex flex-col gap-4">
-                {userInfo.tweets.map(i => (
+                {userInfo.tweets.toReversed().map(i => (
                   <TweetsOnProfile 
                     key={i._id}
                     tweet={i} 

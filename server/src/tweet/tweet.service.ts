@@ -32,15 +32,10 @@ export class TweetService {
         const objID = new mongoose.Types.ObjectId(id)
         const deletedTweet = await this.tweetModel.findByIdAndDelete(objID)
 
-        // author.tweets = author.tweets.filter(i => {
-        //     new mongoose.Types.ObjectId(i) !== deletedTweet._id
-        // })
-
         return deletedTweet
     }
 
     async addLikeToTweet(dto: LikeTweetDTO) {
-
         const tweetID = new mongoose.Types.ObjectId(dto.tweetID);
         const senderID = new mongoose.Types.ObjectId(dto.senderID);
 
@@ -56,6 +51,23 @@ export class TweetService {
 
         return tweet
 
+    }
+
+    async removeLikeFromTweet(dto: LikeTweetDTO) {
+        const tweetID = new mongoose.Types.ObjectId(dto.tweetID);
+        const senderID = new mongoose.Types.ObjectId(dto.senderID);
+
+        const tweet = await this.tweetModel.findById(tweetID);
+        const sender = await this.userModel.findById(senderID);
+
+        tweet.likes = tweet.likes - 1
+        tweet.peopleWhoLiked = tweet.peopleWhoLiked.filter(i => i === sender);
+        sender.likedTweets = sender.likedTweets.filter(i => i === tweet)
+
+        await tweet.save()  
+        await sender.save()
+
+        return tweet
     }
 
 }

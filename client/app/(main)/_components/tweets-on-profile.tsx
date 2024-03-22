@@ -14,15 +14,17 @@ interface TOPProps {
 }
 
 const TweetsOnProfile = ({ tweet, query }: TOPProps) => {
-  
   const { user } = useAuth();
-  const [isLiked, setIsLiked] = useState(tweet.peopleWhoLiked.includes(user?._id as string))
+  const [loading, setLoading] = useState(false)
+  const [isLiked, setIsLiked] = useState(
+    tweet.peopleWhoLiked.includes(user?._id as string)
+  );
 
   const onTweetDelete = async (tweet: Tweet) => {
     if (user?._id !== tweet.author) {
       return toast.error("Доступ запрещён!");
     }
-    
+
     try {
       const res = await axios.delete(`
         ${config.api.tweet.delete}/${tweet._id}
@@ -38,68 +40,82 @@ const TweetsOnProfile = ({ tweet, query }: TOPProps) => {
     query.refetch();
   };
 
-  const onTweetLike = async(tweet: Tweet) => {
-
+  const onTweetLike = async (tweet: Tweet) => {
+    setLoading(true)
     if (tweet.peopleWhoLiked.includes(user?._id as string)) {
-      return toast.error("Нельзя лайкнуть один твит дважды!")
-    }
-
-    try {
-      const response = await axios.post(`${config.api.tweet.like}/${tweet._id}/${user?._id}`);
-      console.log(response)
-      if (response.status !== 201) {
-        toast.error("Произошла ошибка, попробуйте ещё раз", { icon: "😔" });
-      } else {
-        toast.success("Твит удалён!", { icon: "🎉" });
-        setIsLiked(true)
+      try {
+        const response = await axios.patch(
+          `${config.api.tweet.removeLike}/${tweet._id}/${user?._id}`
+        );
+        if (response.status !== 200) {
+          toast.error("Произошла ошибка, попробуйте ещё раз", { icon: "😔" });
+        } else {
+          setIsLiked(false);
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Произошла ошибка, попробуйте ещё раз");
       }
-    } catch (error) {
-      console.error(error)
-      toast.error("Произошла ошибка, попробуйте ещё раз")
+    } else {
+      try {
+        const response = await axios.patch(
+          `${config.api.tweet.like}/${tweet._id}/${user?._id}`
+        );
+        if (response.status !== 200) {
+          toast.error("Произошла ошибка, попробуйте ещё раз", { icon: "😔" });
+        } else {
+          setIsLiked(true);
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Произошла ошибка, попробуйте ещё раз");
+
+      }
     }
+    setLoading(false);
     query.refetch();
-  }
+  };
 
   return (
-      
-        <div key={tweet._id} className="p-2 border">
-          <h3>{tweet._id}</h3>
-          <h3>{tweet.text}</h3>
-          <p>
-            {tweet.likes} / {tweet.retweets}
-          </p>
-          <div>
-            <div className="flex gap-8 items-center">
-              <div className="flex gap-2 items-center py-1">
-                <Button 
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onTweetLike(tweet)}
-                >
-                  <Heart className={`size-4 stroke-none ${isLiked ? "fill-red-500" : "stroke-black"}`} />
-                </Button>
-                {tweet.likes}
-              </div>
-              <div className="flex gap-2 items-center">
-                <Button variant="outline" size="icon">
-                  <RepeatIcon className="size-4" />
-                </Button>
-                {tweet.retweets}
-              </div>
-              <div>
-                <Button
-                  size="icon"
-                  variant="outline"
-                  className="hover:bg-red-500 hover:text-white"
-                  type="button"
-                  onClick={() => onTweetDelete(tweet)}
-                >
-                  <Trash className="size-4" />
-                </Button>
-              </div>
-            </div>
-          </div>
+    <div className="border rounded-lg">
+      <h3 className="px-2 py-4">
+        {tweet.text}
+      </h3>
+      <div className="flex gap-8 items-center border-t px-2">
+        <div className="flex gap-2 items-center py-1">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onTweetLike(tweet)}
+            disabled={loading}
+          >
+            <Heart
+              className={`size-4 stroke-none ${
+                isLiked ? "fill-red-500" : "stroke-black"
+              }`}
+            />
+          </Button>
+          {tweet.likes}
         </div>
+        <div className="flex gap-2 items-center">
+          <Button variant="ghost" size="icon" disabled={loading}>
+            <RepeatIcon className="size-4" />
+          </Button>
+          {tweet.retweets}
+        </div>
+        <div>
+          <Button
+            size="icon"
+            variant="ghost"
+            type="button"
+            onClick={() => onTweetDelete(tweet)}
+            disabled={loading}
+          >
+            <Trash className="size-4" />
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 };
 

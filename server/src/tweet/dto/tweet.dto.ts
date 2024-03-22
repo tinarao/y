@@ -14,5 +14,5 @@ export class DeleteTweetDTO {
 
 export class LikeTweetDTO {
     readonly tweetID: string;
-    readonly senderID
+    readonly senderID: string;
 }
