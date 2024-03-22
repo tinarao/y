@@ -11,6 +11,7 @@ import TweetsOnProfile from "../../_components/tweets-on-profile";
 import useAuth from "@/hooks/useAuth";
 import TweetForm from "@/components/TweetForm";
 import ProfileInfoContainer from "../../_components/profile-info";
+import { Tweet } from "@/types/Tweet";
 
 const ProfilePage = () => {
   const getProfileInfo = async () => {
@@ -51,12 +52,15 @@ const ProfilePage = () => {
           <div className="px-8">
             {query.isPending ? (
               <h1>gruzim</h1>
-            ) : userInfo?.tweets.length !== 0 ? (
-              <div>
-                <TweetsOnProfile 
-                  tweets={userInfo?.tweets} 
-                  query={query}
-                />
+            ) : userInfo.tweets.length !== 0 ? (
+              <div className="my-2 flex flex-col gap-4">
+                {userInfo.tweets.map(i => (
+                  <TweetsOnProfile 
+                    key={i._id}
+                    tweet={i} 
+                    query={query}
+                  />
+                ))}
               </div>
             ) : (
               <div>

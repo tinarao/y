@@ -6,8 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ProfileInfoContainer = ({ user }: { user: User }) => {
-  console.log(user);
-
   return (
     <div className="flex flex-col items-center">
       <div className="w-fit mx-auto">
@@ -24,14 +22,14 @@ const ProfileInfoContainer = ({ user }: { user: User }) => {
         <div className="flex mx-auto w-fit gap-4">
           {user.subscribers ? (
             <div className="py-4 text-sm">
-              <p className="flex gap-8">
+              <div className="flex gap-8">
                 <div className="flex">
                 <Link href="/" className="mr-1 font-bold">{user.subscribers.length}</Link> подписчиков
                 </div>
                 <div className="flex">
                 <Link href="/" className="mr-1 font-bold">{user.subscribedTo?.length}</Link> подписок
                 </div>
-              </p>
+              </div>
             </div>
           ) : (
             <h3>0</h3>

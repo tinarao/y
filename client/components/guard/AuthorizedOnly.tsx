@@ -1,7 +1,7 @@
 "use client";
 
 import Cookies from "js-cookie"
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
@@ -11,9 +11,11 @@ const AuthorizedOnly = ({ children }: { children: ReactNode }) => {
   const isCookieThere = !!Cookies.get("access_token")
   const router = useRouter();
 
-  if (!user?._id && !isLogged && !isCookieThere) {
-    router.replace("/login");
-  } 
+  useEffect(() => {
+    if (!user?._id && !isLogged && !isCookieThere) {
+      router.replace("/login");
+    } 
+  }, [isCookieThere, router, isLogged, user?._id])
   
   return <>{children}</>;
 

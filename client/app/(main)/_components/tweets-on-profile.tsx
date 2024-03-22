@@ -5,17 +5,18 @@ import { Tweet } from "@/types/Tweet";
 import { UseQueryResult } from "@tanstack/react-query";
 import axios from "axios";
 import { Heart, RepeatIcon, Trash } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
 interface TOPProps {
-  tweets: Tweet[];
+  tweet: Tweet;
   query: UseQueryResult<any, Error>;
 }
 
-const TweetsOnProfile = ({ tweets, query }: TOPProps) => {
-  tweets = tweets.toReversed();
+const TweetsOnProfile = ({ tweet, query }: TOPProps) => {
+  
   const { user } = useAuth();
+  const [isLiked, setIsLiked] = useState(tweet.peopleWhoLiked.includes(user?._id as string))
 
   const onTweetDelete = async (tweet: Tweet) => {
     if (user?._id !== tweet.author) {
@@ -37,27 +38,53 @@ const TweetsOnProfile = ({ tweets, query }: TOPProps) => {
     query.refetch();
   };
 
+  const onTweetLike = async(tweet: Tweet) => {
+
+    if (tweet.peopleWhoLiked.includes(user?._id as string)) {
+      return toast.error("Нельзя лайкнуть один твит дважды!")
+    }
+
+    try {
+      const response = await axios.post(`${config.api.tweet.like}/${tweet._id}/${user?._id}`);
+      console.log(response)
+      if (response.status !== 201) {
+        toast.error("Произошла ошибка, попробуйте ещё раз", { icon: "😔" });
+      } else {
+        toast.success("Твит удалён!", { icon: "🎉" });
+        setIsLiked(true)
+      }
+    } catch (error) {
+      console.error(error)
+      toast.error("Произошла ошибка, попробуйте ещё раз")
+    }
+    query.refetch();
+  }
+
   return (
-    <div className="my-2 flex flex-col gap-4">
-      {tweets.map((i) => (
-        <div key={i._id} className="p-2 border">
-          <h3>{i.text}</h3>
+      
+        <div key={tweet._id} className="p-2 border">
+          <h3>{tweet._id}</h3>
+          <h3>{tweet.text}</h3>
           <p>
-            {i.likes} / {i.retweets}
+            {tweet.likes} / {tweet.retweets}
           </p>
           <div>
             <div className="flex gap-8 items-center">
               <div className="flex gap-2 items-center py-1">
-                <Button variant="outline" size="icon">
-                  <Heart className="size-4" />
+                <Button 
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => onTweetLike(tweet)}
+                >
+                  <Heart className={`size-4 stroke-none ${isLiked ? "fill-red-500" : "stroke-black"}`} />
                 </Button>
-                {i.likes}
+                {tweet.likes}
               </div>
               <div className="flex gap-2 items-center">
                 <Button variant="outline" size="icon">
                   <RepeatIcon className="size-4" />
                 </Button>
-                {i.retweets}
+                {tweet.retweets}
               </div>
               <div>
                 <Button
@@ -65,7 +92,7 @@ const TweetsOnProfile = ({ tweets, query }: TOPProps) => {
                   variant="outline"
                   className="hover:bg-red-500 hover:text-white"
                   type="button"
-                  onClick={() => onTweetDelete(i)}
+                  onClick={() => onTweetDelete(tweet)}
                 >
                   <Trash className="size-4" />
                 </Button>
@@ -73,8 +100,6 @@ const TweetsOnProfile = ({ tweets, query }: TOPProps) => {
             </div>
           </div>
         </div>
-      ))}
-    </div>
   );
 };
 

@@ -4,4 +4,5 @@ export interface Tweet {
     text: string
     likes: number
     retweets: number
+    peopleWhoLiked: string[]
 }

@@ -29,6 +29,9 @@ export class User {
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: "tweets"})
   tweets: Tweet[]
 
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: "tweets"})
+  likedTweets: Tweet[]
+
   @Prop()
   profileInfo: string
 

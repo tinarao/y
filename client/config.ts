@@ -9,7 +9,8 @@ export const config = {
         },
         tweet: {
             create: "http://localhost:4000/api/v1/tweet",
-            delete: "http://localhost:4000/api/v1/tweet/delete"
+            delete: "http://localhost:4000/api/v1/tweet/delete",
+            like: "http://localhost:4000/api/v1/tweet/like",
         }
     }
 }

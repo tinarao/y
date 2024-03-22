@@ -11,7 +11,7 @@ export class TweetService {
     constructor(
         @InjectModel("tweets") private tweetModel: Model<Tweet>,
         @InjectModel("users") private userModel: Model<User>
-        ) {}
+    ) { }
 
     async createTweet(dto: CreateTweetDTO) {
         const tweet = await this.tweetModel.create({ ...dto })
@@ -31,18 +31,28 @@ export class TweetService {
     async deleteTweetByID(id: string) {
         const objID = new mongoose.Types.ObjectId(id)
         const deletedTweet = await this.tweetModel.findByIdAndDelete(objID)
+
+        // author.tweets = author.tweets.filter(i => {
+        //     new mongoose.Types.ObjectId(i) !== deletedTweet._id
+        // })
+
         return deletedTweet
     }
 
     async addLikeToTweet(dto: LikeTweetDTO) {
-        // const tweet = await this.tweetModel.findById(dto.tweetID);
-        // const sender = await this.userModel.findById(dto.senderID);
 
-        // tweet.likes += 1;
-        // tweet.peopleWhoLiked.push(dto.senderID);
-        
-        // tweet.peopleWhoLiked.push(sender.id)
-        // sender.likedPosts.push(tweet._id)
+        const tweetID = new mongoose.Types.ObjectId(dto.tweetID);
+        const senderID = new mongoose.Types.ObjectId(dto.senderID);
+
+        const tweet = await this.tweetModel.findById(tweetID);
+        const sender = await this.userModel.findById(senderID);
+
+        tweet.likes = tweet.likes + 1
+        tweet.peopleWhoLiked.push(sender);
+        sender.likedTweets.push(tweet)
+
+        await tweet.save()  
+        await sender.save()
 
         return tweet
 

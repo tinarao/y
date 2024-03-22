@@ -13,6 +13,6 @@ export class DeleteTweetDTO {
 }
 
 export class LikeTweetDTO {
-    readonly tweetID
+    readonly tweetID: string;
     readonly senderID
 }
