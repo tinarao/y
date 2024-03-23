@@ -1,7 +1,8 @@
-interface editData {
+export interface editData {
     fullName?: string
     profileInfo?: string
     links?: string
+    background?: string
 }
 
 export class EditProfileDTO {

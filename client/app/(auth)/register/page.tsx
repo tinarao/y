@@ -49,7 +49,7 @@ const RegisterPage = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="px-6 py-6"
+        className="px-6 py-6 w-[90%]"
       >
         <div className="py-2">
           <h1 className="font-semibold text-2xl">Регистрация</h1>

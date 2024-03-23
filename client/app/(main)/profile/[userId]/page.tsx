@@ -4,28 +4,29 @@ import { config } from "@/config";
 import { getBearerHeader } from "@/utils/auth";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Image from "next/image";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import TweetsOnProfile from "../../_components/tweets-on-profile";
-import useAuth from "@/hooks/useAuth";
+import useAuth, { userStoreType } from "@/hooks/useAuth";
 import TweetForm from "@/components/TweetForm";
 import ProfileInfoContainer from "../../_components/profile-info";
 import { Tweet } from "@/types/Tweet";
 import NoTweets from "@/components/conditional/NoTweets";
 import Loading from "@/components/conditional/Loading";
-import { Camera } from "lucide-react";
+import ProfileCover from "../../_components/profile-cover";
 
 const ProfilePage = () => {
+
+  const { userId } = useParams();
+  console.log(userId)
+
   const getProfileInfo = async () => {
     const response = await axios.get(
-      `${config.api.user.getProfileInfoByID}${userId}`,
+      `${config.api.user.getProfileInfoByID}/${userId}`,
       getBearerHeader()
     );
     return response.data;
   };
 
-  const { userId } = useParams();
   const query = useQuery({
     queryKey: ["todos"],
     queryFn: getProfileInfo,
@@ -36,16 +37,7 @@ const ProfilePage = () => {
 
   return (
     <div className="container p-0 border-r h-full">
-      <div className="h-56 relative border-b">
-        {user?.background ? (
-          <Image className="object-cover" loading="lazy" fill alt={`Фон профиля ${user?.username}`} src={user?.background} />
-        ) : (
-          <div className="flex flex-col justify-center items-center h-full">
-            <h3><Camera className="size-12"/></h3>
-            <h5>Загрузите обложку профиля</h5>
-          </div>
-        )}
-      </div>
+      <ProfileCover user={user as userStoreType} />
       <div className="grid grid-cols-4 h-full">
         <div className="col-span-1 h-full">
           {query.isPending ? (

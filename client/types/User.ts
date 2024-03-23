@@ -7,6 +7,7 @@ export interface User {
     password?: string
     email: string
     profileInfo?: string
+    background?: string
     links: string[]
     fullName?: string
     subscribers? : User[]

@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "justify-center bg-primary text-primary-foreground shadow hover:bg-primary/90",
+          "justify-center bg-black text-primary-foreground shadow hover:bg-primary/90",
         info:
           "text-blue-500 bg-blue-100/50 hover:bg-blue-300 hover:text-blue-800 dark:bg-black dark:hover:bg-gray-900 dark:border light:hover:bg-blue-400",
         destructive:
@@ -21,6 +21,7 @@ const buttonVariants = cva(
           "justify-center bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "justify-center hover:bg-accent hover:text-accent-foreground",
         link: "justify-center text-primary underline-offset-4 hover:underline",
+        cover: "justify-center rounded-none bg-white hover:bg-gray-100"
       },
       size: {
         default: "h-9 px-4 py-2",

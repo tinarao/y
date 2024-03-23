@@ -8,7 +8,7 @@ type Role = "user" | "moderator" | "admin" | undefined
 
 @Schema({ collection: 'users' })
 export class User {
-  @Prop()
+  @Prop({ required: true, unique: true })
   username: string;
 
   @Prop({ unique: true, required: true })

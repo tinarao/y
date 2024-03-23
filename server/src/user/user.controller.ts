@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
+import { Controller, Get, Param, Patch, Query } from '@nestjs/common';
 import { UserService } from './user.service';
-import { EditProfileDTO } from './dto/user.dto';
+import { editData } from './dto/user.dto';
 
 @Controller('user')
 export class UserController {
@@ -9,14 +9,14 @@ export class UserController {
         private userService: UserService
         ) {}
 
-    @Get("/:id")
-    getUserInfoByID(@Param() id: string) {
+    @Get("/info/:id")
+    getUserInfoByID(@Param("id") id: string) {
         return this.userService.getProfileInfoByID(id)
     }
 
-    @Patch("/edit")
-    editUserProfileInfo(@Body() dto: EditProfileDTO) {
-        return this.userService.editProfileData(dto)
+    @Patch("/edit/:username")
+    editUserProfileInfo(@Query() query: editData, @Param("username") username: string) {
+        return this.userService.editProfileData(query, username)
     }
 
 }

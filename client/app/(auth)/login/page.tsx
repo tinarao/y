@@ -50,6 +50,7 @@ const LoginPage = () => {
         links: res.data.user.links,
         fullName: res.data.user.fullName
       }, res.data.access_token)
+      toast.success("Мы скучали!", { icon: "🤗" })
       router.replace("/")
     } catch (error) {
         // @ts-ignore
@@ -63,7 +64,7 @@ const LoginPage = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="px-6 py-6"
+        className="px-6 py-6 w-[90%]"
       >
         <div className="py-2">
           <h1 className="font-semibold text-2xl">Авторизация</h1>

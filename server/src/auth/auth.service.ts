@@ -21,7 +21,8 @@ export class AuthService {
 
     async createUser(dto: CreateUserDTO) {
         const isUserExists = await this.userModel.findOne({ email: dto.email})
-        if (isUserExists) {
+        const isUserWithUsernameExists = await this.userModel.findOne({ username: dto.username })
+        if (isUserExists || isUserWithUsernameExists) {
             throw new BadRequestException({
                 message: "Пользователь с такими данными уже зарегистрирован"
             })

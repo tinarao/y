@@ -16,6 +16,7 @@ const ProfileInfoContainer = ({ user }: { user: User }) => {
           height={200}
           className="rounded-full"
           alt={user.username}
+          priority={true}
         />
       </div>
       <div className="">

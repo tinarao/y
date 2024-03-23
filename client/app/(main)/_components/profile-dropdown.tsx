@@ -31,7 +31,7 @@ const ProfileDropdown = () => {
         <DropdownMenuLabel>{user?.username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href={`/profile/${user?._id}`} className="flex gap-2 cursor-pointer">
+          <Link href={`/profile/${user?.username}`} className="flex gap-2 cursor-pointer">
             <BookOpenText className="size-4" /> Профиль
           </Link>
         </DropdownMenuItem>

@@ -19,13 +19,20 @@ interface userStore {
     isLogged: boolean
     setUser: (currentUser: userStoreType, token: string) => void
     logOut: () => void
+    setBackground: (payload: string) => void
 }
 
 const useAuth = create<userStore>()(
     persist(
-        (set) => ({
+        (set, get) => ({
             user: undefined,
             isLogged: false,
+
+            setBackground: (payload) => {
+                const userRef = get().user!
+                const newUser = {...userRef, background: payload};
+                set({ user: newUser })
+            },
 
             setUser: (payload, token) => {
                 Cookies.set("access_token", token)
