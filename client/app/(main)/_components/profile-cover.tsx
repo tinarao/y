@@ -19,7 +19,7 @@ const ProfileCoverImage = ({ user }: { user: userStoreType }) => {
       />
       <div className="z-50 absolute bottom-0 right-0 mx-8 my-2 hidden group-hover:flex group-hover:gap-4 transition duration-200">
         <CoverDeleteButton />
-        <CoverUploadDialog>
+        <CoverUploadDialog user={user}>
           <Button className="bg-white/50 text-black-600 hover:bg-white">
             <ImageIcon className="size-4 mr-2" /> Заменить
           </Button>
@@ -29,13 +29,19 @@ const ProfileCoverImage = ({ user }: { user: userStoreType }) => {
   );
 };
 
-const ProfileCover = ({ user }: { user: userStoreType }) => {
+const ProfileCover = ({
+  user,
+  isAuthor,
+}: {
+  user: userStoreType;
+  isAuthor: boolean;
+}) => {
   return (
     <div className="relative border-b border-l">
       {user?.background ? (
         <ProfileCoverImage user={user} />
-      ) : (
-        <CoverUploadDialog>
+      ) : isAuthor ? (
+        <CoverUploadDialog user={user}>
           <Button variant="cover" className="w-full flex flex-col h-56">
             <>
               <Camera className="size-12" />
@@ -43,6 +49,8 @@ const ProfileCover = ({ user }: { user: userStoreType }) => {
             </>
           </Button>
         </CoverUploadDialog>
+      ) : (
+        <div className="h-56 bg-background flex items-center justify-center"></div>
       )}
     </div>
   );

@@ -48,7 +48,9 @@ const LoginPage = () => {
         email: res.data.user.email,
         profileInfo: res.data.user.profileInfo,
         links: res.data.user.links,
-        fullName: res.data.user.fullName
+        fullName: res.data.user.fullName,
+        subscribers: res.data.user.subscribers,
+        subscribedTo: res.data.user.subscribedTo
       }, res.data.access_token)
       toast.success("Мы скучали!", { icon: "🤗" })
       router.replace("/")

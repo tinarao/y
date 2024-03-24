@@ -14,11 +14,10 @@ const CoverDeleteButton = () => {
   const coverDeleteHandler = async () => {
     setLoading(true)
     try {
-      const res = await axios.patch(config.api.user.editProfile, {
-        background: undefined,
-        user: user?._id!
+      const res = await axios.patch(`${config.api.user.updateCover}/${user?.username}`, {
+        background: "",
+        username: user!.username
       })
-      console.log(res)
       setBackground("")
 
     } catch (error) {

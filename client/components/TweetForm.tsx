@@ -70,10 +70,7 @@ const TweetForm = ({
           <span className="font-medium text-sm text-red-500">{error}</span>
         )}
       </div>
-      <div className="py-2">
-        <hr />
-      </div>
-      <div className="ml-auto w-fit">
+      <div className="ml-auto w-fit pt-2">
         <Button
           className="flex gap-2 hover:bg-black hover:text-white"
           size="lg"

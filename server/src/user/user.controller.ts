@@ -1,6 +1,6 @@
-import { Controller, Get, Param, Patch, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
 import { UserService } from './user.service';
-import { editData } from './dto/user.dto';
+import { SetCoverDTO, SubscriptionDTO } from './dto/user.dto';
 
 @Controller('user')
 export class UserController {
@@ -14,9 +14,19 @@ export class UserController {
         return this.userService.getProfileInfoByID(id)
     }
 
-    @Patch("/edit/:username")
-    editUserProfileInfo(@Query() query: editData, @Param("username") username: string) {
-        return this.userService.editProfileData(query, username)
+    @Patch("/upd-cover/:username")
+    editUserProfileInfo(@Body() dto: SetCoverDTO) {
+        return this.userService.setProfileCover(dto)
+    }
+
+    @Patch("/subscribe")
+    subscribeHandler(@Body() dto: SubscriptionDTO) {
+        return this.userService.subscribe(dto)
+    }
+
+    @Patch("/unsubscribe")
+    unsubscribeHandler(@Body() dto: SubscriptionDTO) {
+        return this.userService.unsubscribe(dto)
     }
 
 }

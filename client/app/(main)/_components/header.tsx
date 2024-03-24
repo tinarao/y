@@ -1,7 +1,7 @@
 "use client";
 
 import Logo from "@/components/Logo";
-import { Flame, MessageCircle, PenLine, Telescope } from "lucide-react";
+import { Bell, Flame, MessageCircle, PenLine, Telescope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theming/ThemeToggle";
 
@@ -20,23 +20,26 @@ const Header = () => {
             <nav className="flex gap-4">
               <Button variant="ghost">
                 <Link href="/" className="flex gap-2 items-center">
-                  <Telescope className="size-4" /> Открытия
+                  <Telescope className="size-4" /> Главная
                 </Link>
               </Button>
-              <Button variant="ghost">
-                <Link href="/" className="flex gap-2 items-center">
+              {/* <Button variant="ghost">
+                <Link href="/trending" className="flex gap-2 items-center">
                   <Flame className="size-4" /> Горячее
                 </Link>
-              </Button>
+              </Button> */}
             </nav>
           </div>
         </div>
         <div className="flex gap-4 items-center">
-        <Button className='flex gap-2' size="icon" variant="outline">
+        <Button className='flex' size="icon" variant="outline">
             <PenLine className='size-4' />
         </Button>
-        <Button className='flex gap-2' size="icon" variant="outline">
+        {/* <Button className='flex' size="icon" variant="outline">
             <MessageCircle className='size-4' />
+        </Button> */}
+        <Button className='flex' size="icon" variant="outline">
+            <Bell className='size-4' />
         </Button>
         <ProfileDropdown />
         </div>

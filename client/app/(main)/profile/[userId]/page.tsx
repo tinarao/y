@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import TweetsOnProfile from "../../_components/tweets-on-profile";
-import useAuth, { userStoreType } from "@/hooks/useAuth";
+import useAuth from "@/hooks/useAuth";
 import TweetForm from "@/components/TweetForm";
 import ProfileInfoContainer from "../../_components/profile-info";
 import { Tweet } from "@/types/Tweet";
@@ -15,9 +15,7 @@ import Loading from "@/components/conditional/Loading";
 import ProfileCover from "../../_components/profile-cover";
 
 const ProfilePage = () => {
-
   const { userId } = useParams();
-  console.log(userId)
 
   const getProfileInfo = async () => {
     const response = await axios.get(
@@ -34,23 +32,34 @@ const ProfilePage = () => {
 
   const userInfo = query.data;
   const { user } = useAuth();
-
+  const isAuthor = userId === user?.username;
+  
   return (
     <div className="container p-0 border-r h-full">
-      <ProfileCover user={user as userStoreType} />
+      <title>
+        {`y . ${userId}`}
+      </title>
+      <ProfileCover 
+        isAuthor={isAuthor}
+        user={userInfo} 
+      />
       <div className="grid grid-cols-4 h-full">
         <div className="col-span-1 h-full">
           {query.isPending ? (
             <Loading />
           ) : (
-            <ProfileInfoContainer user={userInfo} />
+            <ProfileInfoContainer query={query} user={userInfo} isAuthor={isAuthor} />
           )}
         </div>
         <div className="col-span-3 overflow-y-auto h-full">
-          <div className="py-4 px-8">
-            <TweetForm query={query} user={user} />
-          </div>
-          <hr />
+          {isAuthor && (
+            <>
+              <div className="py-4 px-8">
+                <TweetForm query={query} user={user} />
+              </div>
+              <hr />
+            </>
+          )}
           <div className="px-8">
             {query.isPending ? (
               <Loading />

@@ -21,12 +21,12 @@ import {
 import { app } from "@/firebase";
 import { v4 } from "uuid";
 import Loading from "@/components/conditional/Loading";
-import useAuth from "@/hooks/useAuth";
+import useAuth, { userStoreType } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import axios from "axios";
 import { config } from "@/config";
 
-const CoverUploadDialog = ({ children }: { children: React.ReactNode }) => {
+const CoverUploadDialog = ({ children, user }: { children: React.ReactNode, user: userStoreType }) => {
   const fileRef = useRef<HTMLInputElement>(null);
   const { setBackground } = useAuth();
   const [progress, setProgress] = useState<number | undefined>(undefined);
@@ -35,8 +35,9 @@ const CoverUploadDialog = ({ children }: { children: React.ReactNode }) => {
   );
 
   const sendBackgroundToBackend = async (pic: string) => {
-    const res = await axios.patch(config.api.user.editProfile, {
-      background: pic
+    const res = await axios.patch(`${config.api.user.updateCover}/${user.username}`, {
+      background: pic,
+      username: user.username
     })
     return res
   }
@@ -72,7 +73,6 @@ const CoverUploadDialog = ({ children }: { children: React.ReactNode }) => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           try {
             const res = sendBackgroundToBackend(downloadURL)
-            console.log(res)
             setBackground(downloadURL)
             toast.success("Обложка загружена!", { icon: "🎉" })
           } catch (error) {

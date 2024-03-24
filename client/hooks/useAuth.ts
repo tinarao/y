@@ -12,6 +12,8 @@ export interface userStoreType {
     links: string[]
     fullName?: string
     background?: string
+    subscribers: string[]
+    subscribedTo: string[]
 }
 
 interface userStore {

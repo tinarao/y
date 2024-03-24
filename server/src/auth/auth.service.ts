@@ -67,7 +67,9 @@ export class AuthService {
                 email: candidate.email,
                 profileInfo: candidate.profileInfo,
                 links: candidate.links,
-                fullName: candidate.fullName
+                fullName: candidate.fullName,
+                subscribers: candidate.subscribers,
+                subscribedTo: candidate.subscribedTo
             }
         }
 
