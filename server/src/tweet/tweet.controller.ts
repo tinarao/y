@@ -31,4 +31,10 @@ export class TweetController {
     removeLike(@Param() dto: LikeTweetDTO) {
         return this.tweetService.removeLikeFromTweet(dto)
     }
+
+    @Get("/following/:username")
+    getTweetsByFollowingAuthors(@Param("username") username: string) {
+        return this.tweetService.getTweetsByFollowingAuthors(username)
+    }
+
 }

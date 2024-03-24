@@ -31,14 +31,14 @@ const ProfileDropdown = () => {
         <DropdownMenuLabel>{user?.username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href={`/profile/${user?.username}`} className="flex gap-2 cursor-pointer">
+          <Link href={`/profile/${user?.username}`} className="flex gap-2 cursor-pointer items-center">
             <BookOpenText className="size-4" /> Профиль
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="flex gap-2 cursor-pointer">
+        <DropdownMenuItem className="flex gap-2 cursor-pointer items-center">
           <MessageCircle className="size-4" /> Сообщения
         </DropdownMenuItem>
-        <DropdownMenuItem className="flex gap-2 cursor-pointer" asChild>
+        <DropdownMenuItem className="flex gap-2 cursor-pointer items-center" asChild>
           <Link href="/settings">
             <Cog className="size-4" /> Настройки
           </Link>

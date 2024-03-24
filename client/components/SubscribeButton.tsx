@@ -19,7 +19,7 @@ const SubscribeButton = ({ children, target, query }: SBProps) => {
   const [isAlreadySubscribed, setIsAlreadySubscribed] = useState(false);
 
   useEffect(() => {
-    if (user!.subscribedTo.includes(target._id)) {
+    if (user?.subscribedTo.includes(target._id)) {
       setIsAlreadySubscribed(true);
       return;
     }

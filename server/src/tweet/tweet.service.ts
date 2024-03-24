@@ -46,7 +46,7 @@ export class TweetService {
         tweet.peopleWhoLiked.push(sender);
         sender.likedTweets.push(tweet)
 
-        await tweet.save()  
+        await tweet.save()
         await sender.save()
 
         return tweet
@@ -64,14 +64,50 @@ export class TweetService {
         tweet.peopleWhoLiked = tweet.peopleWhoLiked.filter(i => i === sender);
         sender.likedTweets = sender.likedTweets.filter(i => i === tweet)
 
-        await tweet.save()  
+        await tweet.save()
         await sender.save()
 
         return tweet
     }
 
-    async getHotTweets() {
-        return 0
+    async getTweetsByFollowingAuthors(username: string) {
+        // const user = await this.userModel
+        //     .findOne({ username: username })
+        //     .populate("subscribedTo")
+        //     .populate("tweets");
+
+        // const tweets = [];
+        
+        // user.subscribedTo.forEach(i => {
+        //     tweets.push(i.tweets)
+        // })
+
+        // return tweets
+        const { subscribedTo } = await this.userModel
+            .findOne({ username: username })
+            .populate({
+                path: "subscribedTo",
+                populate: {
+                    path: "tweets",
+                    populate: {
+                        path: "author"
+                    }
+                }
+            })
+            .exec()
+
+        const tweets = [];
+
+        subscribedTo.forEach(i => {
+            i.tweets.forEach(i => {
+                tweets.push(i)
+            })
+        })
+
+        return tweets
+
+
     }
+
 
 }

@@ -1,20 +1,21 @@
-import { Button } from "@/components/ui/button";
-import { config } from "@/config";
-import useAuth from "@/hooks/useAuth";
-import { Tweet } from "@/types/Tweet";
-import { UseQueryResult } from "@tanstack/react-query";
-import axios from "axios";
-import { Heart, RepeatIcon, Trash } from "lucide-react";
-import React, { useState } from "react";
-import { toast } from "sonner";
+import { Button } from '@/components/ui/button';
+import { config } from '@/config';
+import useAuth from '@/hooks/useAuth';
+import { Tweet } from '@/types/Tweet';
+import { UseQueryResult } from '@tanstack/react-query';
+import axios from 'axios';
+import { Heart, RepeatIcon } from 'lucide-react';
+import Image from 'next/image';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
-interface TOPProps {
-  tweet: Tweet;
-  query: UseQueryResult<any, Error>;
-  isAuthor?: boolean;
+interface TCProps {
+    tweet: Tweet;
+    query: UseQueryResult<any, Error>;
 }
 
-const TweetsOnProfile = ({ tweet, query, isAuthor }: TOPProps) => {
+const TweetCard = ({ query, tweet }: TCProps) => {
+
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [isLiked, setIsLiked] = useState(
@@ -79,8 +80,21 @@ const TweetsOnProfile = ({ tweet, query, isAuthor }: TOPProps) => {
 
   return (
     <div className="border rounded-lg">
-      <h3 className="px-4 py-4 text-lg">
-        {tweet.text}
+      <div className='px-4 border-b py-1'>
+        <h3>{tweet.author.username}</h3>
+      </div>
+      <h3 className="px-4 py-4 text-lg flex">
+        <div className='size-8 relative mr-2'>
+          <Image 
+            fill 
+            src={tweet.author.avatar} 
+            alt={tweet.author.username}
+            className='rounded-full' 
+          />
+        </div>
+        <div>
+          {tweet.text}
+        </div>
       </h3>
       <div className="flex gap-8 items-center border-t px-2 justify-between">
         <div className="flex items-center gap-6">
@@ -107,19 +121,6 @@ const TweetsOnProfile = ({ tweet, query, isAuthor }: TOPProps) => {
             </Button>
             {tweet.retweets}
           </div>
-          {isAuthor && (
-            <div>
-              <Button
-                size="icon"
-                variant="ghost"
-                type="button"
-                onClick={() => onTweetDelete(tweet)}
-                disabled={loading}
-              >
-                <Trash className="size-4" />
-              </Button>
-            </div>
-          )}
         </div>
         <div>
           <h3 className="text-xs text-neutral-700">
@@ -128,7 +129,7 @@ const TweetsOnProfile = ({ tweet, query, isAuthor }: TOPProps) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TweetsOnProfile;
+export default TweetCard

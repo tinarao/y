@@ -1,6 +1,8 @@
+import { User } from "./User"
+
 export interface Tweet {
     _id: string
-    author: string
+    author: User | string
     text: string
     likes: number
     retweets: number
