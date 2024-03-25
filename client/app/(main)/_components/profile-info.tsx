@@ -7,16 +7,18 @@ import { UseQueryResult } from "@tanstack/react-query";
 import { Globe, Info, PlusCircle, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import SubscribersDialog from "./subs-dialog";
 
 const ProfileInfoContainer = ({
   user,
   isAuthor,
-  query
+  query,
 }: {
   user: User;
   isAuthor: boolean;
-  query: UseQueryResult<any, Error>
+  query: UseQueryResult<any, Error>;
 }) => {
+
   return (
     <div className="flex flex-col items-center border-x h-full">
       <div className="border-b py-4 w-full">
@@ -35,20 +37,18 @@ const ProfileInfoContainer = ({
         </h2>
         <div className="flex mx-auto w-fit gap-4">
           {user.subscribers ? (
-            <div className="py-4 text-sm">
+            <div className="py-2 text-sm">
               <div className="flex gap-8">
-                <div className="flex">
-                  <Link href="/" className="mr-1 font-bold hover:underline">
-                    {user.subscribers.length}
-                  </Link>
-                  подписчиков
-                </div>
-                <div className="flex items-center">
-                  <Link href="/" className="mr-1 font-bold hover:underline">
-                    {user.subscribedTo?.length}
-                  </Link>
-                  подписок
-                </div>
+                <SubscribersDialog variant="subs" data={query.data.subscribers}>
+                  <Button variant="ghost">
+                    {user.subscribers.length} подписчиков
+                  </Button>
+                </SubscribersDialog>
+                <SubscribersDialog variant="subTo" data={query.data.subscribedTo}>
+                  <Button variant="ghost">
+                    {user.subscribedTo?.length} подписок
+                  </Button>
+                </SubscribersDialog>
               </div>
               {!isAuthor && (
                 <div className="w-full pt-4">

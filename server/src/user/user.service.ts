@@ -10,7 +10,7 @@ export class UserService {
     constructor(@InjectModel("user") private userModel: Model<User>) {}
 
     async getProfileInfoByID(id: string) {
-        const userDetails = await this.userModel.findOne({ "username": id }).populate("tweets");
+        const userDetails = await this.userModel.findOne({ "username": id }).populate("tweets").populate("subscribers").populate("subscribedTo");
 
         if (!userDetails) {
             throw new NotFoundException({

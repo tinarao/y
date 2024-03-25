@@ -7,6 +7,7 @@ import { ThemeToggle } from "@/components/theming/ThemeToggle";
 
 import Link from "next/link";
 import ProfileDropdown from "./profile-dropdown";
+import TweetFormDialog from "./tweet-form-dialog";
 
 const Header = () => {
   return (
@@ -23,18 +24,15 @@ const Header = () => {
                   <Telescope className="size-4" /> Главная
                 </Link>
               </Button>
-              {/* <Button variant="ghost">
-                <Link href="/trending" className="flex gap-2 items-center">
-                  <Flame className="size-4" /> Горячее
-                </Link>
-              </Button> */}
             </nav>
           </div>
         </div>
         <div className="flex gap-4 items-center">
-        <Button className='flex' size="icon" variant="outline">
-            <PenLine className='size-4' />
-        </Button>
+        <TweetFormDialog>
+          <Button className='flex' size="icon" variant="outline">
+              <PenLine className='size-4' />
+          </Button>
+        </TweetFormDialog>
         {/* <Button className='flex' size="icon" variant="outline">
             <MessageCircle className='size-4' />
         </Button> */}

@@ -24,12 +24,11 @@ const TweetForm = ({
   query,
   user,
 }: {
-  query: UseQueryResult<any, Error>;
+  query?: UseQueryResult<any, Error>;
   user: userStoreType | undefined;
 }) => {
 
   const onSubmit: SubmitHandler<Inputs> = async (values) => {
-
 
     const data = {
       ...values,
@@ -44,7 +43,7 @@ const TweetForm = ({
     try {
       const res = await axios.post(config.api.tweet.create, data);
       toast.success("Твит сохранён!")
-      query.refetch();
+      if (query) query.refetch();
     } catch (error) {
       console.error(error);
       toast.success("Упс... произошла ошибка :(")

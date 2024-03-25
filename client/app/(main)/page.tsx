@@ -1,12 +1,12 @@
 "use client";
 
-import Loading from "@/components/conditional/Loading";
+import axios from "axios";
 import { config } from "@/config";
 import useAuth from "@/hooks/useAuth";
-import { Tweet } from "@/types/Tweet";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import TweetsOnProfile from "./_components/tweets-on-profile";
+import { Tweet } from "@/types/Tweet";
+
+import Loading from "@/components/conditional/Loading";
 import TweetCard from "./_components/tweet-card";
 
 const MainPage = () => {

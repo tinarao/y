@@ -4,15 +4,22 @@ import Link from "next/link";
 import Image from "next/image";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const ProfileDropdown = () => {
   const { user, logOut } = useAuth();
-  const router = useRouter()
+  const router = useRouter();
 
   const logOutHandler = () => {
-    logOut()
-    router.replace("/login")
+    logOut();
+    router.replace("/login");
   };
 
   return (
@@ -20,10 +27,10 @@ const ProfileDropdown = () => {
       <DropdownMenuTrigger>
         <Image
           className="rounded-full"
-          src={user?.avatar ? user?.avatar as string : "/avatarph.png"}
+          src={user?.avatar ? (user?.avatar as string) : "/avatarph.png"}
           width={50}
           height={50}
-          alt={user?.username ? user?.username as string : "Аватар"}
+          alt={user?.username ? (user?.username as string) : "Аватар"}
           priority={true}
         />
       </DropdownMenuTrigger>
@@ -31,14 +38,17 @@ const ProfileDropdown = () => {
         <DropdownMenuLabel>{user?.username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href={`/profile/${user?.username}`} className="flex gap-2 cursor-pointer items-center">
+          <Link
+            href={`/profile/${user?.username}`}
+            className="flex gap-2 cursor-pointer items-center"
+          >
             <BookOpenText className="size-4" /> Профиль
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="flex gap-2 cursor-pointer items-center">
-          <MessageCircle className="size-4" /> Сообщения
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex gap-2 cursor-pointer items-center" asChild>
+        <DropdownMenuItem
+          className="flex gap-2 cursor-pointer items-center"
+          asChild
+        >
           <Link href="/settings">
             <Cog className="size-4" /> Настройки
           </Link>
